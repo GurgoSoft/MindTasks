@@ -26,7 +26,7 @@ function addTask(title, desc, deadline, isCompleted = false) {
             ? `<button class="btn btn-sm btn-outline-warning btn-pending"><i class="bi bi-arrow-counterclockwise"></i> Pendiente</button>` 
             : `<button class="btn btn-sm btn-outline-success btn-complete"><i class="bi bi-check-circle"></i> Completar</button>`
           }
-          <button class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></button>
+          <button class="btn btn-sm btn-outline-danger btn-delete"><i class="">Eliminar</i></button>
         </div>
       </div>
     </div>
