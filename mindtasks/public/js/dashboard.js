@@ -1,47 +1,3 @@
-// Mostrar fecha y hora actual con segundos
-function updateDateTime() {
-  const now = new Date();
-  const optionsDate = { day: "numeric", month: "long", year: "numeric" };
-  const dateStr = now.toLocaleDateString("es-ES", optionsDate);
-
-  let hours = now.getHours();
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-  const seconds = now.getSeconds().toString().padStart(2, "0");
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12;
-
-  document.getElementById("current-date").textContent =
-    `${dateStr} – ${hours}:${minutes}:${seconds} ${ampm}`;
-}
-setInterval(updateDateTime, 1000);
-updateDateTime();
-
-// Flatpickr calendario elegante
-flatpickr("#task-deadline", {
-  enableTime: true,
-  dateFormat: "d-m-Y h:i K",
-  time_24hr: false
-});
-
-// Modo oscuro / claro
-const btnTheme = document.getElementById("btn-toggle-theme");
-btnTheme.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-  const icon = btnTheme.querySelector("i");
-  if (document.body.classList.contains("dark-mode")) {
-    icon.classList.replace("bi-moon-fill", "bi-sun-fill");
-  } else {
-    icon.classList.replace("bi-sun-fill", "bi-moon-fill");
-  }
-});
-
-// Cerrar sesión
-document.getElementById("btn-logout").addEventListener("click", () => {
-  localStorage.removeItem("token");
-  window.location.href = "/index.html";
-});
-
-// Manejo de tareas
 const formTask = document.getElementById("form-task");
 const pendingList = document.getElementById("pending");
 const completedList = document.getElementById("completed");
@@ -52,7 +8,7 @@ formTask.addEventListener("submit", (e) => {
   const deadline = document.getElementById("task-deadline").value;
   const desc = document.getElementById("task-desc").value;
 
-  addTask(title, desc, deadline);
+  addTask(title, desc, deadline, false);
   formTask.reset();
 });
 
@@ -65,7 +21,7 @@ function addTask(title, desc, deadline, isCompleted = false) {
         <h5 class="card-title">${title}</h5>
         <p class="card-text text-muted">${desc || "Sin descripción"}</p>
         <p class="small"><i class="bi bi-calendar-event"></i> ${deadline}</p>
-        <div class="mt-auto d-flex gap-2">
+        <div class="mt-auto d-flex gap-2 flex-wrap">
           ${isCompleted 
             ? `<button class="btn btn-sm btn-outline-warning btn-pending"><i class="bi bi-arrow-counterclockwise"></i> Pendiente</button>` 
             : `<button class="btn btn-sm btn-outline-success btn-complete"><i class="bi bi-check-circle"></i> Completar</button>`
@@ -97,9 +53,37 @@ function addTask(title, desc, deadline, isCompleted = false) {
     taskCard.remove();
   });
 
+  // Insertar en el contenedor correcto
   if (isCompleted) {
     completedList.appendChild(taskCard);
   } else {
     pendingList.appendChild(taskCard);
   }
 }
+
+const btnToggleTheme = document.getElementById("btn-toggle-theme");
+const body = document.body;
+
+// Revisar si ya había una preferencia guardada
+if (localStorage.getItem("theme") === "dark") {
+  body.classList.add("dark-mode");
+  body.classList.remove("light-mode");
+  btnToggleTheme.innerHTML = `<i class="bi bi-sun"></i>`;
+} else {
+  body.classList.add("light-mode");
+}
+
+// Botón para cambiar tema
+btnToggleTheme.addEventListener("click", () => {
+  if (body.classList.contains("light-mode")) {
+    body.classList.remove("light-mode");
+    body.classList.add("dark-mode");
+    btnToggleTheme.innerHTML = `<i class="bi bi-sun"></i>`;
+    localStorage.setItem("theme", "dark");
+  } else {
+    body.classList.remove("dark-mode");
+    body.classList.add("light-mode");
+    btnToggleTheme.innerHTML = `<i class="bi bi-moon"></i> Oscuro`;
+    localStorage.setItem("theme", "light");
+  }
+});

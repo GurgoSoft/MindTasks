@@ -1,36 +1,85 @@
+/* 🌞 Modo Claro */
 body.light-mode {
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #a8edea, #fed6e3); /* colores tranquilos */
   color: #212529;
+  transition: background 0.5s ease, color 0.3s ease;
 }
 
+body.light-mode .navbar {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+}
+
+body.light-mode .card {
+  background: #ffffff;
+  border: none;
+}
+
+/* 🌙 Modo Oscuro */
 body.dark-mode {
-  background-color: #1e1e2f;
+  background: linear-gradient(135deg, #1a1a1a, #2e2e2e);
   color: #f8f9fa;
+  transition: background 0.5s ease, color 0.3s ease;
 }
 
-.card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+body.dark-mode .navbar {
+  background-color: rgba(34, 34, 34, 0.9);
+  backdrop-filter: blur(6px);
 }
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0px 6px 20px rgba(0,0,0,0.2);
+body.dark-mode .card {
+  background: #2c2c3e;
+  color: #f8f9fa;
+  border: none;
 }
 
-.navbar {
-  background-color: #ffffff;
-  transition: background 0.3s ease;
-}
-
-.dark-mode .navbar {
-  background-color: #2c2c3e;
-}
-
+/* Botones */
 .btn {
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn:hover {
-  opacity: 0.85;
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
- 
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-outline-warning:hover {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Tarjetas */
+.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Tabs */
+.nav-tabs .nav-link.active {
+  font-weight: bold;
+  border-bottom: 3px solid #28a745;
+}
